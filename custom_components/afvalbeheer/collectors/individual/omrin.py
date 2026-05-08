@@ -192,9 +192,11 @@ class OmrinCollector(WasteCollector):
             emptied_dates = []
             total_count = 0
             total_weight = 0.0
+            per_year_counts = {}
 
             for year in fraction.get('years', []):
                 year_number = year.get('yearNumber', 0)
+                year_count = 0
                 for month in year.get('months', []):
                     for week in month.get('weeks', []):
                         for day in week.get('days', []):
@@ -205,9 +207,12 @@ class OmrinCollector(WasteCollector):
                                     date = datetime.strptime(date_str, '%Y-%m-%d')
                                     emptied_dates.append(date)
                                     total_count += 1
+                                    year_count += 1
                                     total_weight += weight or 0
                                 except (ValueError, TypeError):
                                     _LOGGER.warning("Failed to parse diftar date: %s", date_str)
+                if year_number and year_count > 0:
+                    per_year_counts[year_number] = year_count
 
             # Sort dates descending (most recent first)
             emptied_dates.sort(reverse=True)
@@ -223,6 +228,7 @@ class OmrinCollector(WasteCollector):
                 'total_weight': total_weight,
                 'last_emptied': emptied_dates[0] if emptied_dates else None,
                 'waste_type_slug': waste_type_slug,
+                'per_year_counts': per_year_counts,
             }
             _LOGGER.debug(
                 "Diftar %s: %d times emptied this year, last: %s",

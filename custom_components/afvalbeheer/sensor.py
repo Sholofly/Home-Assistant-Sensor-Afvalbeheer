@@ -463,3 +463,8 @@ class OmrinDiftarSensor(BaseSensor):
             'total_count_this_year': waste_info.get('current_year_count', 0),
             'total_weight': waste_info.get('total_weight', 0),
         }
+
+        # Add per-year pickup counts as attributes (e.g. ophalingen_2024: 5)
+        per_year_counts = waste_info.get('per_year_counts', {})
+        for year, count in sorted(per_year_counts.items()):
+            self._attrs[f'ophalingen_{year}'] = count
