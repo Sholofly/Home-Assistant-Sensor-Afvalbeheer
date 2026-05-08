@@ -272,7 +272,6 @@ class AfvalbeheerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="omrin_credentials",
             data_schema=vol.Schema(schema_dict),
             errors=errors,
-            description_placeholders={"info": "Optionally provide your Omrin account credentials to enable diftar (emptying history) sensors."},
         )
 
     async def async_step_mapping(self, user_input=None):

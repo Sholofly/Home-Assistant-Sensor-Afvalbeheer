@@ -419,10 +419,10 @@ class OmrinDiftarSensor(BaseSensor):
         super().__init__(data, config)
         self.waste_type = waste_type
         self._name = _format_sensor(
-            config.get(CONF_NAME), config.get(CONF_NAME_PREFIX), self.waste_collector, f"{self.waste_type} diftar"
+            config.get(CONF_NAME), config.get(CONF_NAME_PREFIX), self.waste_collector, f"{self.waste_type} aantal ophalingen dit jaar"
         )
         self._attr_unique_id = _format_unique_id(
-            config.get(CONF_NAME), config.get(CONF_NAME_PREFIX), self.waste_collector, f"{self.waste_type}_diftar", self.entry_id, config.get(CONF_POSTCODE), config.get(CONF_STREET_NUMBER)
+            config.get(CONF_NAME), config.get(CONF_NAME_PREFIX), self.waste_collector, f"{self.waste_type}_aantal_ophalingen_dit_jaar", self.entry_id, config.get(CONF_POSTCODE), config.get(CONF_STREET_NUMBER)
         ).lower()
 
     @property
